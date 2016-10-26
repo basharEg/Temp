@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DataSource" Class="dbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=sql5008.smarterasp.net;Persist Security Info=True;User ID=DB_9D90D8_estudies_admin" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DataSourceConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Admin" Member="Admins">
+    <Type Name="Admin">
+      <Column Name="AdminID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(24)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Assignment" Member="Assignments">
+    <Type Name="Assignment">
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TaskID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AssignmentFile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AssignDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Grade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="StudentsInCourse_Assignment" Member="StudentsInCourse" ThisKey="StudentID,CourseID" OtherKey="StudentID,CourseID" Type="StudentsInCourse" IsForeignKey="true" />
+      <Association Name="Task_Assignment" Member="Task" ThisKey="TaskID,CourseID" OtherKey="TaskID,CourseID" Type="Task" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AssignmentGrade" Member="AssignmentGrades">
+    <Type Name="AssignmentGrade">
+      <Column Name="TaskID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CriteriaID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Grade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Course" Member="Courses">
+    <Type Name="Course">
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Points" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FacultyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Sylabus" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Course_CourseStaff" Member="CourseStaffs" ThisKey="CourseID" OtherKey="CourseID" Type="CourseStaff" />
+      <Association Name="Course_StudentsInCourse" Member="StudentsInCourses" ThisKey="CourseID" OtherKey="CourseID" Type="StudentsInCourse" />
+      <Association Name="Course_Task" Member="Tasks" ThisKey="CourseID" OtherKey="CourseID" Type="Task" />
+      <Association Name="Faculty_Course" Member="Faculty" ThisKey="FacultyID" OtherKey="FacultyID" Type="Faculty" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CourseStaff" Member="CourseStaffs">
+    <Type Name="CourseStaff">
+      <Column Name="StaffID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Semester" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Role" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Course_CourseStaff" Member="Course" ThisKey="CourseID" OtherKey="CourseID" Type="Course" IsForeignKey="true" />
+      <Association Name="Staff_CourseStaff" Member="Staff" ThisKey="StaffID" OtherKey="StaffID" Type="Staff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Criterion" Member="Criterions">
+    <Type Name="Criterion">
+      <Column Name="CriteriaID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="StaffID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Criterion_TaskCriterion" Member="TaskCriterions" ThisKey="CriteriaID" OtherKey="CriteriaID" Type="TaskCriterion" />
+      <Association Name="Staff_Criterion" Member="Staff" ThisKey="StaffID" OtherKey="StaffID" Type="Staff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Faculty" Member="Faculties">
+    <Type Name="Faculty">
+      <Column Name="FacultyID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="Faculty_Course" Member="Courses" ThisKey="FacultyID" OtherKey="FacultyID" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Staff" Member="Staffs">
+    <Type Name="Staff">
+      <Column Name="StaffID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(24)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="TitleOfCourtesy" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="Staff_CourseStaff" Member="CourseStaffs" ThisKey="StaffID" OtherKey="StaffID" Type="CourseStaff" />
+      <Association Name="Staff_Criterion" Member="Criterions" ThisKey="StaffID" OtherKey="StaffID" Type="Criterion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Students" Member="Students">
+    <Type Name="Student">
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="Student_StudentsInCourse" Member="StudentsInCourses" ThisKey="StudentID" OtherKey="StudentID" Type="StudentsInCourse" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StudentsInCourses" Member="StudentsInCourses">
+    <Type Name="StudentsInCourse">
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Grade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="StudentsInCourse_Assignment" Member="Assignments" ThisKey="StudentID,CourseID" OtherKey="StudentID,CourseID" Type="Assignment" />
+      <Association Name="Course_StudentsInCourse" Member="Course" ThisKey="CourseID" OtherKey="CourseID" Type="Course" IsForeignKey="true" />
+      <Association Name="Student_StudentsInCourse" Member="Student" ThisKey="StudentID" OtherKey="StudentID" Type="Student" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Task" Member="Tasks">
+    <Type Name="Task">
+      <Column Name="TaskID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TaskDesc" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="TaskWeight" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TaskFile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PublishDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AssignDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Task_Assignment" Member="Assignments" ThisKey="TaskID,CourseID" OtherKey="TaskID,CourseID" Type="Assignment" />
+      <Association Name="Task_TaskCriterion" Member="TaskCriterions" ThisKey="TaskID,CourseID" OtherKey="TaskID,CourseID" Type="TaskCriterion" />
+      <Association Name="Course_Task" Member="Course" ThisKey="CourseID" OtherKey="CourseID" Type="Course" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TaskCriterion" Member="TaskCriterions">
+    <Type Name="TaskCriterion">
+      <Column Name="TaskID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CriteriaID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Weight" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Criterion_TaskCriterion" Member="Criterion" ThisKey="CriteriaID" OtherKey="CriteriaID" Type="Criterion" IsForeignKey="true" />
+      <Association Name="Task_TaskCriterion" Member="Task" ThisKey="TaskID,CourseID" OtherKey="TaskID,CourseID" Type="Task" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
