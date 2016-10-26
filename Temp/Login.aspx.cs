@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services.Description;
@@ -24,9 +25,10 @@ namespace Temp
 
         protected void btnx_OnClick(object sender, EventArgs e)
         {
-            if (db.Students.Any(x => x.FirstName.Equals(txtUser.Text)))
+
+            if (db.Students.Any(x => x.StudentID.Equals(txtUser.Text)))
             {
-                Student st = db.Students.First(x => x.StudentID == 123456780);
+                Student st = db.Students.First(x => x.StudentID == int.Parse(txtUser.Text));
                 if (st.Password.Equals(txtPassword.Text))
                 {
                     Session["Student"] = st;
@@ -34,7 +36,7 @@ namespace Temp
                 }
                 else
                 {
-                    lblMessage.Text= "<i class='fa fa-ban' aria-hidden='true'></i>" + " Login Failed";
+                    lblMessage.Text = "<i class='fa fa-ban' aria-hidden='true'></i>" + " Login Failed";
                 }
             }
             else

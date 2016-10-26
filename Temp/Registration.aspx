@@ -21,11 +21,12 @@
             </div>
             <div class="col-md-4">
                 <form role="form" runat="server">
+                    <br />
                     <h3 class="text-left  text-danger" >
                         <i class="fa fa-hand-o-down" aria-hidden="true"></i>
                         Sign Up
                     </h3>
-                    <br />
+                    
                     <br />
                     <div class="form-group">
                         <asp:Label runat="server" Text="Student ID" CssClass=""></asp:Label>
@@ -44,7 +45,7 @@
 
                     <div class="form-group">
                         <asp:Label runat="server" Text="Email Address"></asp:Label>
-                        <asp:TextBox ID="StuEmail" runat="server" CssClass="form-control" TextMode="Email"></asp:TextBox>
+                        <asp:TextBox ID="StuEmail" runat="server" CssClass="form-control" ></asp:TextBox>
                     </div>
 
                     <div class="form-group">
@@ -56,12 +57,11 @@
                         <asp:Label runat="server" Text="Title"></asp:Label>
                         <asp:TextBox ID="StuTitle" runat="server" CssClass="form-control"></asp:TextBox>
                     </div>
-
-                    <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-info" OnClick="submit_OnClick" />
                     <br />
-                    <br />
-                    <br />
+                    <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-info center-block" OnClick="submit_OnClick" />
+                     <br />
                     <asp:Label runat="server" ID="lblMessage" CssClass="text-danger"></asp:Label>
+                   
 
                 </form>
             </div>
