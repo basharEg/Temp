@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Temp.Models;
 
 namespace Temp
 {
     public partial class Registration : System.Web.UI.Page
     {
-        private dbDataContext db = new dbDataContext();
+        private readonly dbDataContext _db = new dbDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -18,9 +13,9 @@ namespace Temp
 
         protected void submit_OnClick(object sender, EventArgs e)
         {
-            Student stu = new Student
+            var stu = new Student
             {
-                StudentID =Int32.Parse(StuId.Text),
+                StudentID =int.Parse(StuId.Text),
                 FirstName = StuFname.Text,
                 LastName = StuLname.Text,
                 Email = StuEmail.Text,
@@ -28,17 +23,17 @@ namespace Temp
                 Title = StuTitle.Text
             };
 
-            db.Students.InsertOnSubmit(stu);
+            _db.Students.InsertOnSubmit(stu);
 
             try
             {
-                db.SubmitChanges();
+                _db.SubmitChanges();
             }
             catch (Exception )
             {
                 Console.WriteLine("");
               
-                db.SubmitChanges();
+                _db.SubmitChanges();
             }
 
         }
